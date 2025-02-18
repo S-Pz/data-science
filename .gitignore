@@ -2,13 +2,13 @@
 .venv/
 __pycache__/
 .vscode/
-Menus/
+Dados/
+BeloHorizonte/
 
 #File
 *.env
 *.json
 *.sh
 *.db
-*.csv
 *.pdf
 *.zip

@@ -245,7 +245,7 @@ def merge_bases(df_agrupado, df:pd.DataFrame)->pd.DataFrame:
 
 def base_siflis(cidade):
 
-    data = pd.read_csv("Dados/babf2604-06a5-42b9-8038-0ea1d54051fb.csv")
+    data = pd.read_csv("BH_Juiz_Ipatinga/babf2604-06a5-42b9-8038-0ea1d54051fb.csv")
     dbh = data[data['ID_MUNICIP'] == cidade]
     dbh = dbh[dbh["NU_ANO"] != 2024]
     df_agrupado = dbh['NU_ANO'].value_counts().reset_index()
@@ -258,7 +258,7 @@ def load_data(city):
     # Alterar os caminhos conforme a cidade
     if city == "Belo Horizonte":
         
-        df = pd.read_csv("Dados/Dados_BeloHorizonte.csv",encoding="latin1", sep=";")
+        df = pd.read_csv("BH_Juiz_Ipatinga/Dados_BeloHorizonte.csv",encoding="latin1", sep=";")
         df = df[df["Ano"] >= 2010]
         df.isnull().sum()
         df = df.drop(columns=df.columns[df.isnull().sum() > 3])
@@ -277,7 +277,7 @@ def load_data(city):
         
     elif city == "Ipatinga":
          
-        df = pd.read_csv("Dados/Dados_Ipatinga.csv",encoding="latin1", sep=";")
+        df = pd.read_csv("BH_Juiz_Ipatinga/Dados_Ipatinga.csv",encoding="latin1", sep=";")
         df = df[df["Ano"] >= 2010]
         df.isnull().sum()
         df = df.drop(columns=df.columns[df.isnull().sum() > 3])
@@ -296,7 +296,7 @@ def load_data(city):
     
     elif city == "Juiz de Fora":
 
-        df = pd.read_csv("Dados/Dados_Ipatinga.csv",encoding="latin1", sep=";")
+        df = pd.read_csv("BH_Juiz_Ipatinga/Dados_Ipatinga.csv",encoding="latin1", sep=";")
         df = df[df["Ano"] >= 2010]
         df.isnull().sum()
         df = df.drop(columns=df.columns[df.isnull().sum() > 3])
