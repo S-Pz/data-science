@@ -18,7 +18,7 @@ from statsmodels.tsa.arima.model import ARIMA
 
 def exploracao_dados(df):
     
-    st.write("Análise Exploratória dos Dados")
+    st.markdown('<h2 class="title">Análise Exploratória dos Dados</h2>', unsafe_allow_html=True)
 
     # Histograma para "Número de Médicos por 1000 Habitantes"
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -170,8 +170,7 @@ def arima(dk):
         "Ano": anos_futuros,
         "Previsão de Casos": previsoes_futuras
     })
-
-    st.write("Mostrar previsões")
+    st.markdown('<h2 class="title">Previsões</h2>', unsafe_allow_html=True)
     st.write(df_previsoes_arima)
 
     # Plotando a série temporal
@@ -216,7 +215,7 @@ def codificacao_bases_merged(df_merged:pd.DataFrame):
         label_encoders[col] = le
     
     #Correlação de Pearson
-    st.write("Correlação de Pearson") 
+    st.markdown('<h2 class="title">Correlação de Pearson</h2>', unsafe_allow_html=True)
     correlation_matrix = dk.corr()
     correlations = correlation_matrix["Casos"]
     strong_correlations = correlations[correlations.abs() > 0.5].sort_values(ascending=False)
@@ -225,7 +224,7 @@ def codificacao_bases_merged(df_merged:pd.DataFrame):
     plot_filtered_heatmap(correlation_matrix, top_n=10)
     
     #Correlação de Spearman
-    st.write("Correlação de Spearman")
+    st.markdown('<h2 class="title">Correlação de Spearman</h2>', unsafe_allow_html=True)
     correlation_matrix = dk.corr(method="spearman")
     correlations = correlation_matrix["Casos"]
     strong_correlations = correlations[correlations.abs() > 0.5].sort_values(ascending=False)
@@ -263,11 +262,12 @@ def load_data(city):
         df.isnull().sum()
         df = df.drop(columns=df.columns[df.isnull().sum() > 3])
         
+        #Exploração de Dados
+        exploracao_dados(df)
+
         #Número de casos de síflis
         plot_cases_by_year(base_siflis("BELO HORIZONTE"), city)
 
-        #Exploração de Dados
-        exploracao_dados(df)
         
         #Merge das bases
         df_merged = merge_bases(base_siflis("BELO HORIZONTE"), df)
@@ -282,11 +282,11 @@ def load_data(city):
         df.isnull().sum()
         df = df.drop(columns=df.columns[df.isnull().sum() > 3])
         
-        #Número de casos de síflis
-        plot_cases_by_year(base_siflis("IPATINGA"), city)
-        
         #Exploração de Dados
         exploracao_dados(df)
+
+        #Número de casos de síflis
+        plot_cases_by_year(base_siflis("IPATINGA"), city)
         
         #Merge das bases
         df_merged = merge_bases(base_siflis("IPATINGA"), df)
@@ -301,12 +301,12 @@ def load_data(city):
         df.isnull().sum()
         df = df.drop(columns=df.columns[df.isnull().sum() > 3])
         
-        #Número de casos de síflis
-        plot_cases_by_year(base_siflis("JUIZ DE FORA"), city)
-        
         #Exploração de Dados
         exploracao_dados(df)
 
+        #Número de casos de síflis
+        plot_cases_by_year(base_siflis("JUIZ DE FORA"), city)
+                
         #Merge das bases
         df_merged = merge_bases(base_siflis("JUIZ DE FORA"), df)
         dk = codificacao_bases_merged(df_merged)
@@ -324,7 +324,40 @@ def process_data():
     
 
 if __name__ == "__main__":
-   
+    st.markdown(
+    """
+    <style>
+        /* Personaliza o fundo da página */
+        body {
+            font-family: Arial, sans-serif;
+            }
+
+            /* Deixa os gráficos centralizados */
+            .stPlotlyChart, .stImage, .stText {
+                display: flex;
+                justify-content: center;
+            }
+
+            /* Personaliza os títulos */
+            .title {
+                font-size: 28px;
+                font-weight: bold;
+                text-align: center;
+                color: #2E86C1;
+            }
+
+            /* Caixa branca para os gráficos */
+            .stApp {
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+
     st.title("Análise de Casos de Sífilis nas Cidades")
     st.write("""
     Este aplicativo permite visualizar e fazer previsões de casos de sífilis em diversas cidades. Escolha uma cidade e veja os dados de casos históricos e previsões para os próximos anos.
