@@ -1,0 +1,14 @@
+#Directory
+.venv/
+__pycache__/
+.vscode/
+Menus/
+
+#File
+*.env
+*.json
+*.sh
+*.db
+*.csv
+*.pdf
+*.zip
